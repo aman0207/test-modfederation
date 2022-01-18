@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "projects": {
+    "test2-modfederation": {
+      "projectType": "application",
+      "root": "apps/test2-modfederation",
+      "sourceRoot": "apps/test2-modfederation/src",
+      "prefix": "ng-mfe",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/test2-modfederation",
+            "index": "apps/test2-modfederation/src/index.html",
+            "main": "apps/test2-modfederation/src/main.ts",
+            "polyfills": "apps/test2-modfederation/src/polyfills.ts",
+            "tsConfig": "apps/test2-modfederation/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/test2-modfederation/src/favicon.ico",
+              "apps/test2-modfederation/src/assets"
+            ],
+            "styles": ["apps/test2-modfederation/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/test2-modfederation/src/environments/environment.ts",
+                  "with": "apps/test2-modfederation/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "test2-modfederation:build:production"
+            },
+            "development": {
+              "browserTarget": "test2-modfederation:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "test2-modfederation:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/test2-modfederation/src/**/*.ts",
+              "apps/test2-modfederation/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/test2-modfederation"],
+          "options": {
+            "jestConfig": "apps/test2-modfederation/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "test2-modfederation-e2e": {
+      "root": "apps/test2-modfederation-e2e",
+      "sourceRoot": "apps/test2-modfederation-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/test2-modfederation-e2e/cypress.json",
+            "devServerTarget": "test2-modfederation:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "test2-modfederation:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/test2-modfederation-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["test2-modfederation"]
+    }
+  }
+}
